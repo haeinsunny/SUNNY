@@ -6,7 +6,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>헤더</title>
+  <title>main</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -32,7 +32,7 @@
       
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">자유게시판</a>
+            <a class="nav-link" href="/Sunny/BoardList.do">자유게시판</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">공지사항</a>
