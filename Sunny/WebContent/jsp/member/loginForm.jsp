@@ -20,7 +20,7 @@
                 </div>
                 <br />
                 <div>
-                    <form id="frm" name="frm" action="/Member/Login.do" method="post">
+                    <form id="frm" name="frm" action="/Sunny/Login.do" method="post">
                         <table border="1">
                             <tr align="center">
                                 <th width="100">아 이 디</th>

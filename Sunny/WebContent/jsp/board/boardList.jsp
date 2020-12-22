@@ -74,11 +74,12 @@
         <c:if test="${auth ne 'admin' }">
           <button type="button" class="btn btn-outline-info btn-sm"
             onclick="location.href='/Sunny/jsp/board/boardInput.jsp'">글 등록하기</button>
+            
         </c:if>
       </div>
 
       <div class="col-sm-7">
-        <table class=border="1" align="center">
+        <table border="1" align="center">
           <tr align="center">
             <th width="100" style="background-color:lavender;">번호</th>
             <th width="250" style="background-color:lavenderblush;">제목</th>
@@ -87,7 +88,7 @@
             <th width="100" style="background-color:lavender;">조회수</th>
           </tr>
           <c:forEach var="vo" items="${list }">
-            <tr class="record" align="center">
+            <tr class="record" align="center" onclick="location.href='/Sunny/BoardOne.do?no=${vo.bno}'">
               <td width="100" align="center">${vo.bno }</th>
               <td width="250">${vo.btitle }</th>
               <td width="100" align="center">${vo.bdate }</th>
@@ -126,6 +127,7 @@
   function goPage(page) {
     location.href = "/Sunny/BoardList.do?pageNum=" + page;
   }
+  
 </script>
 
 </html>

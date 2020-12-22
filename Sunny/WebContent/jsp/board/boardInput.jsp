@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <jsp:include page="/jsp/common/header.jsp" />
 <!DOCTYPE html>
 <html>
@@ -26,7 +27,7 @@
                         <table border="1">
                             <tr align="center">
                                 <th width="100">작성자</th>
-                                <td width="300" align="left"><input type="text" id="id" name="id"></td>
+                                <td width="300" align="left"><input type="text" id="id" name="id" value="${id }" readonly></td>
                             </tr>
                             <tr align="center">
                                 <th width="100">날짜</th>

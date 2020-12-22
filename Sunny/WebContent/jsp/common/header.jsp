@@ -31,16 +31,20 @@
       <!-- Links -->
       
         <ul class="navbar-nav mr-auto">
+        <c:if test="${id ne null || auth ne null}">
           <li class="nav-item">
             <a class="nav-link" href="/Sunny/BoardList.do">자유게시판</a>
           </li>
+        </c:if>
+        
+        <c:if test="${id ne null || auth ne null}">  
           <li class="nav-item">
             <a class="nav-link" href="#">공지사항</a>
           </li>
-        
+        </c:if>
       
       <!-- Dropdown -->
-        
+        <c:if test="${auth eq 'admin' }">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
               회원관리
@@ -51,6 +55,7 @@
               <a class="dropdown-item" href="#">B 관리</a>
             </div>
           </li>
+        </c:if> 
       </ul>
     </div>
 
@@ -64,18 +69,23 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
       <ul class="navbar-nav ml-auto">
         
+        <c:if test="${id eq null || auth eq null}">
           <li class="nav-item">
-            <a class="nav-link" href="#">마이페이지</a>
+            <a class="nav-link" href="/Sunny/jsp/member/joinForm.jsp">회원가입</a>
           </li>
+        </c:if>
+         
+       <c:if test="${id ne null || auth ne null}">
+          <li class="nav-item">
+            <a class="nav-link" href="/Sunny/Logout.do">로그아웃</a>
+          </li>
+       </c:if>
        
+       <c:if test="${id eq null || auth eq null}"> 
           <li class="nav-item">
-            <a class="nav-link" href="#">로그아웃</a>
+            <a class="nav-link" href="/Sunny/jsp/member/loginForm.jsp">로그인</a>
           </li>
-       
-          <li class="nav-item">
-            <a class="nav-link" href="#">로그인</a>
-          </li>
-
+	   </c:if>
       </ul>
     </div>
   </nav>

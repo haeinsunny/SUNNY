@@ -49,8 +49,8 @@ public class BoardDao {
 
 	// sql작성
 	private final String selectAllPage = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
-			+ "(SELECT * FROM BOARD ORDER BY BNO ASC) A ) B WHERE RN BETWEEN ? AND ? ";
-	private final String selectAll = "SELECT * FROM BOARD ORDER BY BNO ASC";
+			+ "(SELECT * FROM BOARD ORDER BY BNO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+	private final String selectAll = "SELECT * FROM BOARD ORDER BY BNO DESC";
 	private final String INSERT = "INSERT INTO BOARD VALUES(bo_seq.nextval, ?, sysdate, ?, 0, ?)";
 	private final String COUNT = "SELECT COUNT(*) FROM BOARD";
 	private final String HIT_UPDATE = "UPDATE BOARD SET BHIT = BHIT+1 WHERE BNO =?";
@@ -58,6 +58,21 @@ public class BoardDao {
 	private final String DELETE = "DELETE FROM BOARD WHERE BNO=?";
 	private final String SELECT_ONE = "SELECT * FROM BOARD WHERE BNO=?";
 	
+	//페이징처리
+	private final String SELECT_ID = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
+			+ "(SELECT * FROM BOARD WHERE BID LIKE (?) ORDER BY BNO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+	private final String SELECT_TITLE = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
+			+ "(SELECT * FROM BOARD WHERE BTITLE LIKE (?) ORDER BY BNO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+	private final String SELECT_CONTENT = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
+			+ "(SELECT * FROM BOARD WHERE BCONTENT LIKE (?) ORDER BY BNO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+	//조건검색
+	private final String SIDCOUNT = "SELECT COUNT(*) FROM (SELECT A.*, ROWNUM RN FROM"
+			+ "(SELECT * FROM BOARD WHERE BID LIKE (?) ORDER BY BNO DESC) A ) B";
+	private final String STITLECOUNT = "SELECT COUNT(*) FROM (SELECT A.*, ROWNUM RN FROM"
+			+ "(SELECT * FROM BOARD WHERE BTITLE LIKE (?) ORDER BY BNO DESC) A ) B";
+	private final String SCONTENTCOUNT = "SELECT COUNT(*) FROM (SELECT A.*, ROWNUM RN FROM"
+			+ "(SELECT * FROM BOARD WHERE BCONTENT LIKE (?) ORDER BY BNO DESC) A ) B";
+
 	// 한건조회 및 조회수 증가
 	public BoardVo selectOne(BoardVo vo) {
 		try {
@@ -85,8 +100,8 @@ public class BoardDao {
 
 		return vo;
 	}
-	
-	//UPDATE: 레코드수정
+
+	// UPDATE: 레코드수정
 	public int update(BoardVo vo) { // 게시글 update
 		int n = 0;
 		try {
@@ -102,8 +117,8 @@ public class BoardDao {
 
 		return n;
 	}
-	
-	//DELETE: 레코드 삭제
+
+	// DELETE: 레코드 삭제
 	public int delete(BoardVo vo) {
 		int n = 0;
 		try {
@@ -117,7 +132,7 @@ public class BoardDao {
 		}
 		return n;
 	}
-	
+
 	// 전체조회 : 페이징 처리를 위한 sql / 인라인뷰, rownum 사용
 	public ArrayList<BoardVo> selectAllPage(int startRow, int endRow) {
 		ArrayList<BoardVo> list = new ArrayList<BoardVo>();
@@ -146,7 +161,7 @@ public class BoardDao {
 		return list;
 	}
 
-	// selectAll: 전체조회 
+	// selectAll: 전체조회
 	public ArrayList<BoardVo> selectAll() {
 		ArrayList<BoardVo> list = new ArrayList<BoardVo>();
 		BoardVo vo;
@@ -171,9 +186,9 @@ public class BoardDao {
 		}
 		return list;
 	}
-	
+
 	// INSERT: 게시글 입력
-	public int insert(BoardVo vo) { 
+	public int insert(BoardVo vo) {
 		int n = 0; // 입력건 선언 validation한다
 		try {
 			psmt = conn.prepareStatement(INSERT);
@@ -189,7 +204,7 @@ public class BoardDao {
 
 		return n;
 	}
-	
+
 	// 총 레코드 수
 	public int getCount() {
 		int n = 0;
@@ -205,6 +220,135 @@ public class BoardDao {
 			close();
 		}
 		return n; // 총 레코드 수 리턴
+	}
+
+	// SEARCH:검색
+	public ArrayList<BoardVo> selectSearch(String search, String word, int startRow, int endRow) {
+		ArrayList<BoardVo> slist = new ArrayList<BoardVo>();
+		BoardVo vo;
+		if (search.equals("writer")) { // string 일때는 .equals("?")
+			try {
+				psmt = conn.prepareStatement(SELECT_ID); // 실어보내는것
+				psmt.setString(1, "%" + word + "%");
+				psmt.setInt(2, startRow);
+				psmt.setInt(3, endRow);
+				rs = psmt.executeQuery(); // 보낸명령을 실행시켜달라
+				while (rs.next()) {
+					vo = new BoardVo(); // 초기화하고
+					vo.setBno(Integer.parseInt(rs.getString("BNO"))); // 값들을 가져와서
+					vo.setBtitle(rs.getString("BTITLE"));
+					vo.setBdate(rs.getDate("BDATE"));
+					vo.setBid(rs.getString("BID"));
+					vo.setBhit(Integer.parseInt(rs.getString("BHIT")));
+
+					slist.add(vo); // 리스트에 담아라
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally { // finally되면 닫아주는 프로그램 실행 (밑의 메소드 만들어서)
+				close();
+			}
+			return slist;
+
+		} else if (search.equals("title")) {
+			try {
+				psmt = conn.prepareStatement(SELECT_TITLE); // 실어보내는것
+				psmt.setString(1, "%" + word + "%");
+				psmt.setInt(2, startRow);
+				psmt.setInt(3, endRow);
+				rs = psmt.executeQuery(); // 보낸명령을 실행시켜달라
+				while (rs.next()) {
+					vo = new BoardVo(); // 초기화하고
+					vo.setBno(Integer.parseInt(rs.getString("BNO"))); // 값들을 가져와서
+					vo.setBtitle(rs.getString("BTITLE"));
+					vo.setBdate(rs.getDate("BDATE"));
+					vo.setBid(rs.getString("BID"));
+					vo.setBhit(Integer.parseInt(rs.getString("BHIT")));
+
+					slist.add(vo); // 리스트에 담아라
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally { // finally되면 닫아주는 프로그램 실행 (밑의 메소드 만들어서)
+				close();
+			}
+			return slist;
+		} else if (search.equals("CONTENT")) {
+			try {
+				psmt = conn.prepareStatement(SELECT_CONTENT); // 실어보내는것
+				psmt.setString(1, "%" + word + "%");
+				psmt.setInt(2, startRow);
+				psmt.setInt(3, endRow);
+				rs = psmt.executeQuery(); // 보낸명령을 실행시켜달라
+				while (rs.next()) {
+					vo = new BoardVo(); // 초기화하고
+					vo.setBno(Integer.parseInt(rs.getString("BNO"))); // 값들을 가져와서
+					vo.setBtitle(rs.getString("BTITLE"));
+					vo.setBdate(rs.getDate("BDATE"));
+					vo.setBid(rs.getString("BID"));
+					vo.setBhit(Integer.parseInt(rs.getString("BHIT")));
+
+					slist.add(vo); // 리스트에 담아라
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally { // finally되면 닫아주는 프로그램 실행 (밑의 메소드 만들어서)
+				close();
+			}
+			return slist;
+		}
+		return slist;
+	}
+
+	// 조건검색 총 레코드 수
+	public int getSearchCount(String search, String word) {
+		BoardVo vo;
+		int n = 0;
+		if (search.equals("writer")) {
+			try {
+				psmt = conn.prepareStatement(SIDCOUNT);
+				psmt.setString(1, "%" + word + "%");
+				rs = psmt.executeQuery();
+				if (rs.next()) {
+					n = rs.getInt(1);
+					System.out.println(n);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				close();
+			}
+			return n; // 총 레코드 수 리턴
+		} else if (search.equals("title")) {
+			try {
+				psmt = conn.prepareStatement(STITLECOUNT);
+				psmt.setString(1, "%" + word + "%");
+				rs = psmt.executeQuery();
+				if (rs.next()) {
+					n = rs.getInt(1);			
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				close();
+			}
+			return n; // 총 레코드 수 리턴
+		} else if (search.equals("content")) {
+			try {
+				psmt = conn.prepareStatement(SCONTENTCOUNT);
+				psmt.setString(1, "%" + word + "%");
+				rs = psmt.executeQuery();
+				if (rs.next()) {
+					n = rs.getInt(1);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				close();
+			}
+			return n; // 총 레코드 수 리턴
+		}
+		return n;
 	}
 
 }
