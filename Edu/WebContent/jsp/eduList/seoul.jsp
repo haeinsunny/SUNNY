@@ -151,7 +151,7 @@
 
 <script>
   function goPage(page) {
-    location.href = "/Sunny/BoardList.do?pageNum=" + page;
+    location.href = "/Edu/EduList.do?pageNum=" + page;
   }
 </script>
 
