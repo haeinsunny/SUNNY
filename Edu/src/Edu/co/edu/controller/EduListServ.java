@@ -43,10 +43,12 @@ public class EduListServ extends HttpServlet {
 				JSONObject json = arr.getJSONObject(i);
 				String id = json.getString("ID");
 				int n = id.indexOf('.');
+				String addr = json.getString("ADDR");
+				int a = addr.indexOf('구');
 				vo = new GetEduVo();
 				vo.setID(id.substring(0, n));
 				vo.setNM(json.getString("NM"));
-				vo.setADDR(json.getString("ADDR"));
+				vo.setADDR(addr.substring(0, a));
 				vo.setTEL(json.getString("TEL"));
 
 				elist.add(vo);
@@ -55,10 +57,14 @@ public class EduListServ extends HttpServlet {
 			// INSERT
 			dao = new EduDao();
 			int n = dao.insert(elist);
-			System.out.println("총" + n + "건");
+			System.out.println("총" + n + "건" + " OpenAPI가 저장 되었습니다.");
+			
+			// MERGE
+			dao = new EduDao();
+			int m = dao.smerge();
+			System.out.println("총" + m + "건" + " 레코드가 병합 되었습니다.");
 
 			// 전체 조회 페이징 처리
-
 			String pageNum = request.getParameter("pageNum"); // jsp페이지로부터 값 받아오기
 			dao = new EduDao(); // 위에서 dao.selectAll()하고 디비 닫아버림 다시 conn해야해서
 			PageVo paging = new PageVo();
@@ -70,8 +76,8 @@ public class EduListServ extends HttpServlet {
 			int startRow = paging.getPageNo() * 10 - 9; // 리스트 조회 (한페이지당 10개씩)
 			int endRow = paging.getPageNo() * 10;
 			dao = new EduDao();
-			ArrayList<EduVo> blist = dao.selectAllPage(startRow, endRow);
-			request.setAttribute("list", blist);
+			ArrayList<EduVo> list = dao.selectAllPage(startRow, endRow);
+			request.setAttribute("elist", list);
 
 			int currentPage = Integer.parseInt(pageNum); // 넘어온 pageNum은 string이므로 파싱하기
 			int prevPage = currentPage == 1 ? 1 : currentPage - 1; // 이전페이지 유효성검사: 현재페이지가 1이면 이전페이지도 1이라고 한다 아니면(:) -1

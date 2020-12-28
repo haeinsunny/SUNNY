@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <jsp:include page="/header.jsp" />
 <!DOCTYPE html>
 <html>
@@ -73,12 +74,7 @@
                 <select name="sort" id="sort" style="width:80px; height:30px">
                   <option value="A">대형</option>
                   <option value="B">입시</option>
-                  <option value="C">과외</option>
-                  <option value="D">초등</option>
-                  <option value="E">중등</option>
-                  <option value="F">고등</option>
-                  <option value="G">재수</option>
-                  <option value="H">편입</option>
+                  <option value="C">단과</option>
                 </select>
               </td>
               <td>
@@ -113,13 +109,13 @@
             <th width="100">주소</th>
             <th width="100">등록일자</th>
           </tr>
-          <c:forEach var="vo" items="${list }">
-            <tr class="record" align="center" onclick="location.href='/Sunny/BoardOne.do?no=${vo.bno}'">
-              <td width="100" align="center">${vo.bno }</th>
-              <td width="250">${vo.btitle }</th>
-              <td width="100" align="center">${vo.bdate }</th>
-              <td width="100" align="center">${vo.bid }</th>
-              <td width="100" align="center">${vo.bhit }</th>
+          <c:forEach var="vo" items="${elist }">
+            <tr class="record" align="center" onclick="location.href='/Edu/EduOne.do?no=${vo.e_no}'">
+              <td width="100" align="center">${vo.e_no }</td>
+              <td width="250">${vo.name }</td>
+              <td width="100" align="center">${vo.sort }</td>
+              <td width="100" align="center">${vo.address }</td>
+              <td width="100" align="center">${vo.e_date }</td>
             </tr>
           </c:forEach>
         </table>
