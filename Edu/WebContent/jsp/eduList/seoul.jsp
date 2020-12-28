@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/header.jsp" />
 <!DOCTYPE html>
 <html>
@@ -42,25 +42,7 @@
         <br>
         <h4>서울</h4>
       </div>
-      <div class="col-sm-1"></div>
-      <div class="col-sm-2">
-        <br>
-        <br>
-        <br>
-        <br>
-        <form action="/Edu/SearchList.do">
-          <table class="search">
-            <tr>
-              <td>
-                <input type="text" name="word" id="word" value="학원명을 입력하세요.">
-              </td>&nbsp;
-              <td>
-                <input type="submit" class="btn btn-outline-info btn-sm" value="검색">
-              </td>
-            </tr>
-          </table>
-        </form>
-      </div>
+      <div class="col-sm-3"></div>
       <div class="col-sm-1">
         <br>
         <br>
@@ -96,8 +78,22 @@
         <br />
         <c:if test="${type eq 'client' }">
           <button type="button" class="btn btn-outline-info btn-sm"
-            onclick="location.href='/Sunny/jsp/board/boardInput.jsp'">학원 등록</button>
+            onclick="location.href='/Sunny/jsp/eduList/eduInput.jsp'">학원 등록</button>
         </c:if>
+
+        <form action="/Edu/SearchList.do">
+          <table class="search">
+            <tr>
+              <td>
+                <input type="text" name="word" id="word" value="학원명을 입력하세요.">
+              </td>
+              <td>
+                <input type="submit" class="btn btn-outline-info btn-sm" value="검색">
+              </td>
+            </tr>
+          </table>
+        </form>
+
       </div>
 
       <div class="col-sm-8">
@@ -114,7 +110,7 @@
               <td width="100" align="center">${vo.e_no }</td>
               <td width="250">${vo.name }</td>
               <td width="100" align="center">${vo.sort }</td>
-              <td width="100" align="center">${vo.address }</td>
+              <td width="100" align="center">${vo.addr }구</td>
               <td width="100" align="center">${vo.e_date }</td>
             </tr>
           </c:forEach>

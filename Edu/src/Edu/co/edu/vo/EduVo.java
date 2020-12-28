@@ -5,8 +5,8 @@ import java.util.Date;
 public class EduVo {
 	String e_no;
 	String name;
-	String phone;
-	String address;
+	String tel;
+	String addr;
 	String sort;
 	String no;
 	String area;
@@ -24,17 +24,17 @@ public class EduVo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPhone() {
-		return phone;
+	public String getTel() {
+		return tel;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
-	public String getAddress() {
-		return address;
+	public String getAddr() {
+		return addr;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
 	public String getSort() {
 		return sort;
@@ -60,4 +60,6 @@ public class EduVo {
 	public void setE_date(Date e_date) {
 		this.e_date = e_date;
 	}
+	
+	
 }

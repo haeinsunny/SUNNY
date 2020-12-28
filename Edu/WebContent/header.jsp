@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -35,14 +36,30 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ml-auto">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">님</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/Edu/jsp/eduList/eduMain.jsp">학원조회</a>
+                    <c:if test="${id ne null}">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">${name }님</a></li>
+                    </c:if>
+
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger"
+                            href="/Edu/jsp/eduList/eduMain.jsp">학원조회</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">상담조회</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">회원가입</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">로그인</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">로그아웃</a></li>
+
+                    <c:if test="${id ne null || type ne null}">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">상담조회</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">마이페이지</a></li>
+                    </c:if>
+
+                    <c:if test="${id eq null }">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger"
+                                href="/Edu/jsp/user/joinForm.jsp">회원가입</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger"
+                                href="/Edu/jsp/user/loginForm.jsp">로그인</a></li>
+                    </c:if>
+
+                    <c:if test="${id ne null || type ne null}">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/Edu/Logout.do">로그아웃</a>
+                        </li>
+                    </c:if>
                 </ul>
             </div>
         </div>

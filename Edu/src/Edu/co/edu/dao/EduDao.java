@@ -20,24 +20,24 @@ public class EduDao extends DAO {
 
 	// 서울 List MERGE문
 	private final String SMERGE = "MERGE INTO EDU A USING SEOUL B ON (A.e_no = B.e_no)"
-			+ "WHEN MATCHED THEN UPDATE SET  A.name = B.name, A.address = B.addr, A.phone = B.tel, A.e_date = B.e_date"
-			+ "WHEN NOT MATCHED THEN INSERT(e_no, name, phone, address, sort, area, e_date)"
-			+ "VALUES (B.e_no, B.name, B.tel, B.addr, B.sort, B.area, B.e_date)";
+			+ " WHEN MATCHED THEN UPDATE SET  A.name = B.name, A.addr = B.addr, A.tel = B.tel, A.e_date = B.e_date"
+			+ " WHEN NOT MATCHED THEN INSERT(e_no, name, tel, addr, sort, area, e_date)"
+			+ " VALUES (B.e_no, B.name, B.tel, B.addr, B.sort, B.area, B.e_date)";
 
 	// 전체조회 sql
 	private final String SELECT_SEOUL = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
-			+ "(SELECT * FROM EDU WHERE AREA='서울' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+			+ " (SELECT * FROM EDU WHERE AREA='서울' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
 
 	// 서울 총 레코드 수
 	private final String COUNT = "SELECT COUNT(*) FROM EDU";
 
 	// 분류검색 sql
 	private final String SELECT_A = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
-			+ "(SELECT * FROM EDU WHERE SORT='대형' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+			+ " (SELECT * FROM EDU WHERE SORT='대형' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
 	private final String SELECT_B = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
-			+ "(SELECT * FROM EDU WHERE SORT='입시' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+			+ " (SELECT * FROM EDU WHERE SORT='입시' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
 	private final String SELECT_C = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
-			+ "(SELECT * FROM EDU WHERE SORT='단과' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+			+ " (SELECT * FROM EDU WHERE SORT='단과' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
 
 	// OpenAPI INSERT
 	public int insert(ArrayList<GetEduVo> elist) {
@@ -69,7 +69,7 @@ public class EduDao extends DAO {
 		int m = 0;
 		try {
 			psmt = conn.prepareStatement(SMERGE);
-			m = psmt.executeUpdate(SMERGE);
+			m = psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -93,7 +93,7 @@ public class EduDao extends DAO {
 				vo = new EduVo(); // 초기화하고
 				vo.setE_no(rs.getString("E_NO")); // 값들을 가져와서
 				vo.setName(rs.getString("NAME"));
-				vo.setAddress(rs.getString("ADDRESS"));
+				vo.setAddr(rs.getString("ADDR"));
 				vo.setSort(rs.getString("SORT"));
 				vo.setE_date(rs.getDate("E_DATE"));
 
