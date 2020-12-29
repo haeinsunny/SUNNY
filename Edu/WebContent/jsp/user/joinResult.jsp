@@ -29,8 +29,9 @@
   <header class="masthead" style="padding-top: 12rem; padding-bottom:1rem;"></header>
   <br />
   <br />
+  <br />
   <div align="center">
-    <h3>${name}님 회원가입 되었습니다.</h3>
+    <h4>${msg }</h4>
     <br />
     <button class="btn btn-warning" onclick="location.href='/Edu/jsp/user/loginForm.jsp'">로그인하기</button>
   </div>

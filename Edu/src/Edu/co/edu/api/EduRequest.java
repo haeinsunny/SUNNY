@@ -51,7 +51,7 @@ public class EduRequest {
 	
 	public static String GetEdu() { // 어디에서나 쓸수있도록 get메서드 공용클래스만듬
 		StringBuilder sb = new StringBuilder(); // String을 이어줄 빌더 만들고
-		String strUrl = "http://openapi.seoul.go.kr:8088/66497a7a48676f643132344a57456141/json/InstutBuildInfo/1/5/";
+		String strUrl = "http://openapi.seoul.go.kr:8088/66497a7a48676f643132344a57456141/json/InstutBuildInfo/1/37/";
 		try {
 			URL url = new URL(strUrl); // 1. URL객체 선언 자바패키지
 			HttpURLConnection con = (HttpURLConnection) url.openConnection(); // 2. 서버연결 자바패키지, HttpURLConnection에 서버녕ㄴ결

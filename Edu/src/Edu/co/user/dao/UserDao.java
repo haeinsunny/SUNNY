@@ -35,6 +35,8 @@ public class UserDao extends DAO {
 			+ "VALUES(U_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private final String UPDATE = "UPDATE USER_EDU SET PASSWORD=? WHERE ID=?";
 	private final String DELETE = "DELETE FROM USER_EDU WHERE ID=?";
+	private final String EINSERT = "INSERT INTO EDU(E_NO, NAME, TEL, ADDR, SORT, AREA, E_DATE, NO)"
+			+ "VALUES(E_SEQ.NEXTVAL, ?, ?, ?, ?, '서울', SYSDATE, ?)";
 
 	// 전체조회
 	public ArrayList<UserVo> selectAll() {
@@ -48,8 +50,12 @@ public class UserDao extends DAO {
 				vo.setNo(rs.getString("NO"));
 				vo.setType(rs.getString("TYPE"));
 				vo.setName(rs.getString("NAME"));
-				vo.setId(rs.getString("ID"));
+				vo.setAge(Integer.parseInt(rs.getString("age")));
+				vo.setTel(rs.getString("tel"));
 				vo.setAddr(rs.getString("ADDR"));
+				vo.setSort(rs.getString("sort"));
+				vo.setId(rs.getString("ID"));
+				vo.setPw(rs.getString("pw"));
 
 				list.add(vo); // 리스트에 담아라
 			}
@@ -94,11 +100,11 @@ public class UserDao extends DAO {
 			psmt.setString(1, vo.getId());
 			psmt.setString(2, vo.getPw());
 			rs = psmt.executeQuery();
-			if (rs.next()) {				
+			if (rs.next()) {
 				vo.setId(rs.getString("ID"));
 				vo.setName(rs.getString("NAME")); // getString("NAME"):DB에서 가져오는 컬럼
 				vo.setType(rs.getString("TYPE"));
-			}else {
+			} else {
 				vo.setId(null);
 			}
 		} catch (SQLException e) {
@@ -122,6 +128,27 @@ public class UserDao extends DAO {
 			psmt.setString(6, vo.getSort());
 			psmt.setString(7, vo.getId());
 			psmt.setString(8, vo.getPw());
+
+			n = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return n;
+	}
+
+	// 학원등록
+	public int eInsert(UserVo vo) {
+		int n = 0;
+		try {
+			psmt = conn.prepareStatement(EINSERT);
+			psmt.setString(1, vo.getName());
+			psmt.setString(2, vo.getTel());
+			psmt.setString(3, vo.getAddr());
+			psmt.setString(4, vo.getSort());
+			psmt.setString(5, vo.getNo());
 
 			n = psmt.executeUpdate();
 		} catch (SQLException e) {
@@ -188,8 +215,6 @@ public class UserDao extends DAO {
 
 		return list;
 	}
-	
-	
 
 //		//중복체크
 //		public String checkId(String id) {

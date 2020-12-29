@@ -55,7 +55,7 @@
                         </tr>
                         <tr align="center">
                             <th width="100" height="40">주소</th>
-                            <td colspan="3">${vo.addr }구
+                            <td colspan="3">${vo.addr }
                             </td>
                             <th width="100">전화번호</th>
                             <td colspan="2">${vo.tel }

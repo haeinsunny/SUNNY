@@ -37,18 +37,30 @@ public class EduListServ extends HttpServlet {
 
 			// 가져온 JSON데이터를 ArrayList에 담기(DB에 넣기 위함)
 			ArrayList<GetEduVo> elist = new ArrayList<GetEduVo>();
-			GetEduVo vo;
+			GetEduVo vo = new GetEduVo();
 
 			for (int i = 0; i < arr.size(); i++) {
 				JSONObject json = arr.getJSONObject(i);
+
 				String id = json.getString("ID");
 				int n = id.indexOf('.');
-				String addr = json.getString("ADDR");
-				int a = addr.indexOf('구');
-				vo = new GetEduVo();
 				vo.setID(id.substring(0, n));
+
+				try {
+					if (json.getString("ID") != "") {
+						String address = json.getString("ADDR");
+						int a = address.indexOf('구');
+						String ad = address.substring(0, a);
+						String addr = ad + "구";
+						vo.setADDR(addr);
+					} else {
+						vo.setADDR(json.getString("ADDR"));
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 				vo.setNM(json.getString("NM"));
-				vo.setADDR(addr.substring(0, a));
 				vo.setTEL(json.getString("TEL"));
 
 				elist.add(vo);
@@ -58,7 +70,7 @@ public class EduListServ extends HttpServlet {
 			dao = new EduDao();
 			int n = dao.insert(elist);
 			System.out.println("총" + n + "건" + " OpenAPI가 저장 되었습니다.");
-			
+
 			// MERGE
 			dao = new EduDao();
 			int m = dao.smerge();

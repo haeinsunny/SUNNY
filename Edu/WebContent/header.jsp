@@ -63,11 +63,11 @@
                     </li>
 
                     <c:if test="${type eq 'user' }">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">상담조회</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/Edu/ConReq.do?name=${name }&type=${type }">상담조회</a></li>
                     </c:if>
                     
                     <c:if test="${type eq 'client' }">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">상담관리</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/Edu/ConReq.do?name=${name }&type=${type }">상담관리</a></li>
                     </c:if>
                     
                     <c:if test="${id ne null }">

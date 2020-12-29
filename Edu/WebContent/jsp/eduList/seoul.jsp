@@ -76,16 +76,12 @@
         <h3>Edu List</h3>
         <p>학원을 찾아보세요:)</p>
         <br />
-        <c:if test="${type eq 'client' }">
-          <button type="button" class="btn btn-outline-info btn-sm"
-            onclick="location.href='/Sunny/jsp/eduList/eduInput.jsp'">학원 등록</button>
-        </c:if>
 
         <form action="/Edu/SearchList.do">
           <table class="search">
             <tr>
               <td>
-                학원명: <input type="text" name="word" id="word" value="" style="width:120px;">
+                <input type="text" name="word" id="word" value="" placeholder="학원명" style="width:130px;">
               </td>
               <td>
                 <input type="submit" class="btn btn-outline-info btn-sm" value="검색">
@@ -110,7 +106,7 @@
               <td width="100" align="center">${vo.e_no }</td>
               <td width="250">${vo.name }</td>
               <td width="100" align="center">${vo.sort }</td>
-              <td width="100" align="center">${vo.addr }구</td>
+              <td width="100" align="center">${vo.addr }</td>
               <td width="100" align="center">${vo.e_date }</td>
             </tr>
           </c:forEach>
@@ -119,7 +115,7 @@
               <td width="100" align="center">${no.e_no }</td>
               <td width="250">${no.name }</td>
               <td width="100" align="center">${no.sort }</td>
-              <td width="100" align="center">${no.addr }구</td>
+              <td width="100" align="center">${no.addr }</td>
               <td width="100" align="center">${no.e_date }</td>
             </tr>
           </c:forEach>

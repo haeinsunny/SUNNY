@@ -108,13 +108,13 @@
 						<tr align="center">
 							<th height="60" width="200">전화번호</th>
 							<td width="350" align="left">&nbsp;&nbsp;<input type="text" id="tel" name="tel" value=""
-									required>&nbsp;&nbsp;'-'제외</td>
+									required>&nbsp;&nbsp;'-' 제외하고 입력</td>
 						</tr>
 
 						<tr align="center">
 							<th height="60" width="200">주소</th>
 							<td width="350" align="left">&nbsp;&nbsp;<input type="text" id="addr" name="addr" value=""
-									required>&nbsp;&nbsp;'구'까지만 입력</td>
+									required>&nbsp;&nbsp;'구' 까지만 입력</td>
 						</tr>
 					</table>
 

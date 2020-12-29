@@ -10,7 +10,14 @@ public class ReqVo {
 	String sort;
 	String result;
 	Date r_date;
+	String cname;
 	
+	public String getCname() {
+		return cname;
+	}
+	public void setCname(String cname) {
+		this.cname = cname;
+	}
 	public String getR_no() {
 		return r_no;
 	}

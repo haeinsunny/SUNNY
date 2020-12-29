@@ -6,7 +6,7 @@
 <html>
 
 <head>
-  <title>seoul</title>
+  <title>상담관리리스트</title>
   <meta charset="UTF-8">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -34,93 +34,42 @@
   <header class="masthead" style="padding-top: 12rem; padding-bottom:1rem;"></header>
   <!-- List -->
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-4"></div>
-      <div class="col-sm-3" align="right">
-        <br>
-        <br>
-        <br>
-        <h4>서울</h4>
-      </div>
-      <div class="col-sm-3"></div>
-      <div class="col-sm-1">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <form action="/Edu/SearchList.do">
-          <table class="sort">
-            <tr>
-              <td>
-                <select name="sort" id="sort" style="width:80px; height:30px">
-                  <option value="A">대형</option>
-                  <option value="B">입시</option>
-                  <option value="C">단과</option>
-                </select>
-              </td>
-              <td>
-                <input type="button" class="btn btn-outline-info btn-sm" value="분류">
-              </td>
-            </tr>
-          </table>
-        </form>
-      </div>
-    </div>
-    <br>
-    <div class="col-sm-1"></div>
-
+ 
     <div class="row">
       <div class="col-sm-3" align="center">
         <br />
-        <h3>Edu List</h3>
-        <p>학원을 찾아보세요:)</p>
         <br />
-        <c:if test="${type eq 'client' }">
-          <button type="button" class="btn btn-outline-info btn-sm"
-            onclick="location.href='/Sunny/jsp/eduList/eduInput.jsp'">학원 등록</button>
-        </c:if>
-
-        <form action="/Edu/SearchList.do">
-          <table class="search">
-            <tr>
-              <td>
-                학원명: <input type="text" name="word" id="word" value="" style="width:120px;">
-              </td>
-              <td>
-                <input type="submit" class="btn btn-outline-info btn-sm" value="검색">
-              </td>
-            </tr>
-          </table>
-        </form>
-
+        <br />
+        <br />
+        <h4>Consult List</h4>
+        <br />
+        <p>상담내역을 확인해 보세요:)</p>
       </div>
 
       <div class="col-sm-8">
+      <br />
+      <br />
+        <br />
+        <br />
         <table class="table table-hover" align="center">
           <tr align="center">
-            <th width="100">등록번호</th>
-            <th width="250">학원명</th>
-            <th width="100">분류</th>
+            <th width="80">신청번호</th>
+            <th width="200">학원명</th>
+            <th width="100">전화번호</th>
             <th width="100">주소</th>
-            <th width="100">등록일자</th>
+            <th width="50">분류</th>
+            <th width="80">신청일자</th>
+            <th width="50">결과</th>
           </tr>
-          <c:forEach var="vo" items="${elist }">
-            <tr class="record" align="center" onclick="location.href='/Edu/EduRead.do?no=${vo.e_no}'">
-              <td width="100" align="center">${vo.e_no }</td>
-              <td width="250">${vo.name }</td>
+          <c:forEach var="vo" items="${rlist }">
+            <tr class="record" align="center" onclick="location.href='/Edu/EduRead.do?no=${vo.r_no}'">
+              <td width="100" align="center">${vo.r_no }</td>
+              <td width="100" align="center">${vo.cname }</td>
+              <td width="250">${vo.tel }</td>
+              <td width="100" align="center">${vo.addr }</td>
               <td width="100" align="center">${vo.sort }</td>
-              <td width="100" align="center">${vo.addr }구</td>
-              <td width="100" align="center">${vo.e_date }</td>
-            </tr>
-          </c:forEach>
-          <c:forEach var="no" items="${list }">
-            <tr class="record" align="center" onclick="location.href='/Edu/EduRead.do?no=${no.e_no}'">
-              <td width="100" align="center">${no.e_no }</td>
-              <td width="250">${no.name }</td>
-              <td width="100" align="center">${no.sort }</td>
-              <td width="100" align="center">${no.addr }구</td>
-              <td width="100" align="center">${no.e_date }</td>
+              <td width="100" align="center">${vo.r_date }</td>
+              <td width="100" align="center">${vo.result }</td>
             </tr>
           </c:forEach>
         </table>
@@ -146,13 +95,15 @@
               페이지</a>
         </ul>
       </div>
-      <div class="col-sm-1"></div>
+   
+     <div class="col-sm-2" align="center"></div>
+     </div>
     </div>
 </body>
 
 <script>
   function goPage(page) {
-    location.href = "/Edu/EduList.do?pageNum=" + page;
+    location.href = "/Edu/ConReq.do?pageNum=" + page;
   }
 </script>
 
