@@ -34,7 +34,7 @@
 
 <body>
 	<!-- Masthead-->
-	<header class="masthead" style="padding-top: 8rem; padding-bottom:1rem;"></header>
+	<header class="masthead" style="padding-top: 12rem; padding-bottom:1rem;"></header>
 	<br />
 	<br />
 	<div class="container">
@@ -45,7 +45,6 @@
 				<br />
 				<form id="frm" name="frm" action="/Edu/Join.do" method="post">
 					<table border="1">
-
 						<tr align="center">
 							<th height="60" width="200">아이디</th>
 							<td width="350" align="left">&nbsp;&nbsp;<input type="text" class="username_input" id="id"

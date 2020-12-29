@@ -26,41 +26,43 @@
 
 <body>
     <!-- Masthead-->
-    <header class="masthead" style="padding-top: 8rem; padding-bottom:1rem;"></header>
+    <header class="masthead" style="padding-top: 12rem; padding-bottom:1rem;"></header>
     <br />
     <br />
     <div align="center" class="container">
-        <br />
         <div class="row">
-            <div class="col-sm-12" align="center">
+            <div class="col-sm-4" align="center"> </div>
+
+            <div class="col-sm-4" align="center">
+                <br />
+                <br />
                 <div>
-                    <h4>로그인</h4>
+                    <h3>Login</h3>
                 </div>
                 <br />
+
                 <div>
                     <h5 style='color:#e6b301;'>${msg }</h5>
                 </div>
-                <br/>
-                <div>
-                    <form id="frm" name="frm" action="/Edu/Login.do" method="post">
-                        <table border="1">
-                            <tr align="center">
-                                <th width="100">아 이 디</th>
-                                <td width="200" align="left">
-                                    <input type="text" id="id" name="id">
-                                </td>
-                            </tr>
-                            <tr align="center">
-                                <th width="100">비 밀 번 호</th>
-                                <td width="200" align="left">
-                                    <input type="password" id="pw" name="pw">
-                                </td>
-                            </tr>
-                        </table>
-                        <br />
-                        <input type="submit" class="btn btn-light" onclick="btn()" value="확인">
+                <br />
+
+                <div class="form-group">
+                    <form action="/Edu/Login.do">
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" placeholder="아이디 입력" id="id" name="id"
+                                    width="100">
+                            </div>
+                            <div class="col">
+                                <input type="password" class="form-control" placeholder="패스워드 입력" name="pw" width="100">
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">로그인</button>
                     </form>
                 </div>
+                <div class="col-sm-4" align="center"> </div>
             </div>
         </div>
     </div>

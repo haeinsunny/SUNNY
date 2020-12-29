@@ -26,11 +26,12 @@ public class EduReadServ extends HttpServlet {
 		EduDao dao = new EduDao(); 
 		EduVo vo = new EduVo(); 
 
-		vo.setE_no(request.getParameter("e_no")); 
+		vo.setE_no(request.getParameter("no")); 
 		vo = dao.selectOne(vo); 
 
 		request.setAttribute("vo", vo);
-		String viewPage = "/Edu/jsp/eduList/eduRead.jsp"; 
+		
+		String viewPage = "/jsp/eduList/eduRead.jsp"; 
 
 		RequestDispatcher dp = request.getRequestDispatcher(viewPage); 
 		dp.forward(request, response);

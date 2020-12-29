@@ -46,7 +46,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger">${name }님</a>
+                            <a class="nav-link js-scroll-trigger" style="color:#e6b301">${name }님</a>
                         </li>
                     </c:if>
 

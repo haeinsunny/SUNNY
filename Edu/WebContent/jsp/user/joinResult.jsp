@@ -26,7 +26,7 @@
 
 <body>
   <!-- Masthead-->
-  <header class="masthead" style="padding-top: 8rem; padding-bottom:1rem;"></header>
+  <header class="masthead" style="padding-top: 12rem; padding-bottom:1rem;"></header>
   <br />
   <br />
   <div align="center">

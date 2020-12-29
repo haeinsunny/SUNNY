@@ -26,7 +26,7 @@
 
 <body>
     <!-- Masthead-->
-    <header class="masthead" style="padding-top: 8rem; padding-bottom:1rem;"></header>
+    <header class="masthead" style="padding-top: 12rem; padding-bottom:1rem;"></header>
     <!-- List -->
     <div class="container">
         <div class="row">
@@ -35,44 +35,50 @@
                 <br />
                 <br />
                 <div align="center">
-                    <h4>${vo.name }학원이름</h4>
+                    <h4>${vo.name }</h4>
                 </div>
+                <br />
                 <br />
                 <div align="center">
                     <table border="1">
                         <tr align="center">
                             <th width="100" height="40">번호</th>
-                            <td width="100">${vo.e_no}</td>
+                            <td width="100">${vo.e_no }</td>
                             <th width="100">등록일자</th>
-                            <td width="100">${vo.e_date}</td>
+                            <td width="100">${vo.e_date }</td>
                             <th width="100">유형</th>
-                            <td width="100">${vo.sort}</td>
+                            <td width="100">${vo.sort }</td>
                         </tr>
                         <tr align="center">
-                            <th width="100"  height="40">학원명</th>
-                            <td colspan="5">${vo.name}</td>
+                            <th width="100" height="40">학원명</th>
+                            <td colspan="5">${vo.name }</td>
                         </tr>
                         <tr align="center">
-                            <th width="100"  height="40">주소</th>
-                            <td colspan="3">${vo.bcontent}
+                            <th width="100" height="40">주소</th>
+                            <td colspan="3">${vo.addr }구
                             </td>
                             <th width="100">전화번호</th>
-                            <td colspan="2">${vo.bcontent}
+                            <td colspan="2">${vo.tel }
                             </td>
                         </tr>
-                    </table>                  
+                    </table>
                     <br />
                     <br />
-                    <div align="center">
-                        <h5>상담 버튼을 누르면 신청이 완료됩니다.</h4>
-                    </div>
+                    <c:if test="${type eq 'user' }">
+                        <div align="center">
+                            <h5>상담 버튼을 누르면 신청이 완료됩니다.</h4>
+                        </div>
+                    </c:if>
                     <br />
                     <div>
                         <form id="frm" name="frm" action="" method="post">
-                            <input type="hidden" id="no" name="no" value="${vo.e_no }">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button type="submit" class="btn btn-success"
-                                onclick="location.href='/Edu/EduConsult.do'">상담신청</button>&nbsp;&nbsp;&nbsp;
+                            <c:if test="${type eq 'user' }">
+                                <input type="hidden" id="name" name="name" value="${name }">
+                                <input type="hidden" id="cname" name="cname" value="${vo.name }">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-success"
+                                    onclick="consultReq()">상담신청</button>&nbsp;&nbsp;&nbsp;
+                            </c:if>
                             <button type="button" class="btn btn-secondary"
                                 onclick="location.href='/Edu/EduList.do'">목록</button>
                         </form>
@@ -83,5 +89,27 @@
     </div>
     <br />
 </body>
+<script type="text/javascript">
 
+function consultReq() {
+		var name = document.getElementById('name').value;
+		var cname = document.getElementById('cname').value;
+		$.ajax({
+			url : '/Edu/EduConsult.do',
+			data : {
+				name:name,
+				cname:cname
+			},
+			//dataType : 'json',
+			success : function(data) {
+				console.log('hhh');
+                alert('상담신청 완료 했습니다.');
+			},
+			error : function() {
+				alert('상담신청 실패 했습니다.');
+			}
+		})
+	}
+	
+</script>
 </html>

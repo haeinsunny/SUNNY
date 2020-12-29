@@ -26,10 +26,8 @@
 
 <body id="page-top">
     <!-- Masthead-->
-    <header class="masthead" style="padding-top: 8rem; padding-bottom:1rem;">
+    <header class="masthead" style="padding-top: 12rem; padding-bottom:1rem;">
     </header>
-    <br />
-    <br />
     <br />
    <!-- Services-->
     <section class="page-section" id="services">
@@ -38,6 +36,7 @@
                 <h2 class="section-heading text-uppercase">학원조회</h2>
                 <h6 class="section-subheading text-muted">찾고자하는 지역을 클릭하세요</h6>
             </div>
+            <br/>
             <br/>
             <div class="row text-center">
                 <div class="col-md-4" href="jsp/eduList/seoul.jsp">
