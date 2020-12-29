@@ -48,12 +48,24 @@ public class Join extends HttpServlet {
 		
 		vo.setId(request.getParameter("id"));  
 		vo.setType(request.getParameter("type"));
-		vo.setSort(request.getParameter("sort"));
-		vo.setName(request.getParameter("name"));
-		vo.setAge(Integer.parseInt(request.getParameter("age")));
+		vo.setSort(request.getParameter("sort"));	
+		
+		//학생이름과 학원명 구분해서 DB입력
+		if(request.getParameter("name") == ""){
+			vo.setName(request.getParameter("aname"));
+		}else {
+			vo.setName(request.getParameter("name"));
+		}
+		
+		//age int형 null값 못들어가게  예외처리 
+		if(request.getParameter("age") == ""){		
+			vo.setAge(0);
+		}else {
+			vo.setAge(Integer.parseInt(request.getParameter("age")));
+		}
+		
 		vo.setTel(request.getParameter("tel"));
 		vo.setAddr(request.getParameter("addr"));
-		vo.setType(request.getParameter("type"));
 
 		int n = dao.insert(vo); 
 		

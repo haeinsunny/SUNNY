@@ -68,9 +68,10 @@ public class Login extends HttpServlet {
 			session.setAttribute("type", vo.getType());			
 			dp.forward(request, response);
 		} else {
-
-			String msg = "로그인 실패 했습니다.";
-			request.setAttribute("msg", msg);				
+			viewPage = "jsp/user/loginForm.jsp";
+			String msg = "로그인 실패 :( ";
+			request.setAttribute("msg", msg);
+			dp = request.getRequestDispatcher(viewPage);
 			dp.forward(request, response);
 		}
 

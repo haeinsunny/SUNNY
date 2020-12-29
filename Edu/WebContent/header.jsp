@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>header</title>
+    <title>Edu</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -21,6 +21,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -37,26 +40,48 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ml-auto">
                     <c:if test="${id ne null}">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">${name }님</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger">
+                                <i class="fas fa-unlock-alt" style='font-size:18px; color:#e6b301;'></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger">${name }님</a>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${id eq null}">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger">
+                                <i class="fas fa-lock" style='font-size:18px; color:#e6b301;'></i>
+                            </a>
+                        </li>
                     </c:if>
 
                     <li class="nav-item"><a class="nav-link js-scroll-trigger"
                             href="/Edu/jsp/eduList/eduMain.jsp">학원조회</a>
                     </li>
 
-                    <c:if test="${id ne null || type ne null}">
+                    <c:if test="${type eq 'user' }">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">상담조회</a></li>
+                    </c:if>
+                    
+                    <c:if test="${type eq 'client' }">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">상담관리</a></li>
+                    </c:if>
+                    
+                    <c:if test="${id ne null }">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">마이페이지</a></li>
                     </c:if>
 
-                    <c:if test="${id eq null }">
+                    <c:if test="${id eq null}">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger"
                                 href="/Edu/jsp/user/joinForm.jsp">회원가입</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger"
                                 href="/Edu/jsp/user/loginForm.jsp">로그인</a></li>
                     </c:if>
 
-                    <c:if test="${id ne null || type ne null}">
+                    <c:if test="${id ne null }">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/Edu/Logout.do">로그아웃</a>
                         </li>
                     </c:if>

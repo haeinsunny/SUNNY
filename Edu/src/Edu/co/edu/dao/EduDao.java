@@ -30,7 +30,14 @@ public class EduDao extends DAO {
 
 	// 서울 총 레코드 수
 	private final String COUNT = "SELECT COUNT(*) FROM EDU";
+	
+	//조건검색
+	private final String SCOUNT = "SELECT COUNT(*) FROM (SELECT A.*, ROWNUM RN FROM"
+			+ "(SELECT * FROM EDU WHERE NAME LIKE (?) ORDER BY E_NO DESC) A ) B";
+	private final String SEARCH = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
+			+ "(SELECT * FROM EDU WHERE NAME LIKE (?) ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
 
+	
 	// 분류검색 sql
 	private final String SELECT_A = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
 			+ " (SELECT * FROM EDU WHERE SORT='대형' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
@@ -39,6 +46,10 @@ public class EduDao extends DAO {
 	private final String SELECT_C = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
 			+ " (SELECT * FROM EDU WHERE SORT='단과' ORDER BY E_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
 
+	// 한건 조회
+	private final String SELECT_ONE = "SELECT * FROM EDU WHERE E_NO=?"; 
+	
+	
 	// OpenAPI INSERT
 	public int insert(ArrayList<GetEduVo> elist) {
 		int n = 0, sum = 0; // 입력건 선언 validation한다
@@ -106,6 +117,76 @@ public class EduDao extends DAO {
 		}
 		return list;
 	}
+	
+	//한건 조회
+	public EduVo selectOne(EduVo vo) {
+		try {
+			psmt = conn.prepareStatement(SELECT_ONE); 
+			psmt.setString(1, vo.getE_no());
+			rs = psmt.executeQuery(); 
+			if (rs.next()) { 
+				vo = new EduVo(); 
+				vo.setE_no(rs.getString("e_no")); 
+				vo.setE_date(rs.getDate("e_date"));
+				vo.setSort(rs.getString("sort"));
+				vo.setName(rs.getString("name"));
+				vo.setAddr(rs.getString("addr"));
+				vo.setTel(rs.getString("tel"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { 
+			close();
+		}
+
+		return vo;
+	}
+	
+	// 조건검색 조회 : 페이징 처리를 위한 sql / 인라인뷰, rownum 사용
+		public ArrayList<EduVo> Search(String word, int startRow, int endRow) {
+			ArrayList<EduVo> list = new ArrayList<EduVo>();
+			EduVo vo;
+			try {
+				psmt = conn.prepareStatement(SEARCH); // 실어보내는것
+				psmt.setString(1, "%" + word + "%");
+				psmt.setInt(2, startRow);
+				psmt.setInt(3, endRow);
+				rs = psmt.executeQuery(); // 보낸명령을 실행시켜달라
+				while (rs.next()) {
+					vo = new EduVo(); // 초기화하고
+					vo.setE_no(rs.getString("E_NO")); // 값들을 가져와서
+					vo.setName(rs.getString("NAME"));
+					vo.setAddr(rs.getString("ADDR"));
+					vo.setSort(rs.getString("SORT"));
+					vo.setE_date(rs.getDate("E_DATE"));
+
+					list.add(vo); // 리스트에 담아라
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally { // finally되면 닫아주는 프로그램 실행 (밑의 메소드 만들어서)
+				close();
+			}
+			return list;
+		}
+	
+	// 조건검색 총 레코드 수
+		public int getSCount(String word) {
+			int c = 0;
+			try {
+				psmt = conn.prepareStatement(SCOUNT);
+				psmt.setString(1, "%" + word + "%");
+				rs = psmt.executeQuery();
+				if (rs.next()) {
+					c = rs.getInt(1);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				close();
+			}
+			return c; // 총 레코드 수 리턴
+		}
 
 	// 총 레코드 수
 	public int getCount() {

@@ -85,7 +85,7 @@
           <table class="search">
             <tr>
               <td>
-                <input type="text" name="word" id="word" value="학원명을 입력하세요.">
+                학원명: <input type="text" name="word" id="word" value="" style="width:120px;">
               </td>
               <td>
                 <input type="submit" class="btn btn-outline-info btn-sm" value="검색">
@@ -106,12 +106,21 @@
             <th width="100">등록일자</th>
           </tr>
           <c:forEach var="vo" items="${elist }">
-            <tr class="record" align="center" onclick="location.href='/Edu/EduOne.do?no=${vo.e_no}'">
+            <tr class="record" align="center" onclick="location.href='/Edu/EduRead.do?no=${vo.e_no}'">
               <td width="100" align="center">${vo.e_no }</td>
               <td width="250">${vo.name }</td>
               <td width="100" align="center">${vo.sort }</td>
               <td width="100" align="center">${vo.addr }구</td>
               <td width="100" align="center">${vo.e_date }</td>
+            </tr>
+          </c:forEach>
+          <c:forEach var="no" items="${list }">
+            <tr class="record" align="center" onclick="location.href='/Edu/EduRead.do?no=${no.e_no}'">
+              <td width="100" align="center">${no.e_no }</td>
+              <td width="250">${no.name }</td>
+              <td width="100" align="center">${no.sort }</td>
+              <td width="100" align="center">${no.addr }구</td>
+              <td width="100" align="center">${no.e_date }</td>
             </tr>
           </c:forEach>
         </table>

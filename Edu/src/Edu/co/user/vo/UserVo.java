@@ -10,7 +10,7 @@ public class UserVo {
 	String sort;
 	String id;
 	String pw;
-	
+
 	public String getNo() {
 		return no;
 	}

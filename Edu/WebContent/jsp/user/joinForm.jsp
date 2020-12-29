@@ -43,10 +43,11 @@
 			<div class="col-sm-6" align="center">
 				<h4>가입 정보 입력</h4>
 				<br />
-				<form id="frm" name="frm" action="/Edu/Encryption.do" method="post">
+				<form id="frm" name="frm" action="/Edu/Join.do" method="post">
 					<table border="1">
+
 						<tr align="center">
-							<th height="60" width="200">아이디 입력</th>
+							<th height="60" width="200">아이디</th>
 							<td width="350" align="left">&nbsp;&nbsp;<input type="text" class="username_input" id="id"
 									name="id" value="" required>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button id="check" name="check" class="btn btn-light" onclick="id_check()"
@@ -55,19 +56,22 @@
 								<i style='font-size: 24px; display: none;' class="fas fa-check" id="check_sucess"></i>
 							</td>
 						</tr>
+
 						<tr align="center">
-							<th height="60" width="200">비밀번호 입력</th>
+							<th height="60" width="200">비밀번호</th>
 							<td width="350" align="left">&nbsp;&nbsp;
 								<input type="password" id="pw" name="pw" value="" required>
 								<input type="hidden" id="epw" name="epw" value="">
 								<input type="hidden" id="depw" name="depw" value="">
 							</td>
 						</tr>
+
 						<tr align="center">
 							<th height="60" width="200">비밀번호 재입력</th>
 							<td width="350" align="left">&nbsp;&nbsp;<input type="password" id="pw2" name="pw2" value=""
 									required></td>
 						</tr>
+
 						<tr align="center">
 							<th height="60" width="200">구분</th>
 							<td width="350" align="left">&nbsp;
@@ -83,27 +87,38 @@
 								</select>
 							</td>
 						</tr>
-						<tr align="center">
+
+						<tr align="center" id="uname">
 							<th height="60" width="200">학생이름</th>
 							<td width="350" align="left">&nbsp;&nbsp;<input type="text" id="name" name="name" value=""
 									required></td>
 						</tr>
-						<tr align="center">
+
+						<tr align="center" id="uage">
 							<th height="60" width="200">학생나이</th>
 							<td width="350" align="left">&nbsp;&nbsp;<input type="number" id="age" name="age" value=""
-									style="width:80px; height:30px" required>세</td>
+									style="width:80px; height:30px" required>&nbsp;세</td>
 						</tr>
+
+						<tr align="center" style="display: none;" id="cname">
+							<th height="60" width="200">학원명</th>
+							<td width="350" align="left">&nbsp;&nbsp;<input type="text" id="aname" name="aname" value="">
+							</td>
+						</tr>
+
 						<tr align="center">
 							<th height="60" width="200">전화번호</th>
 							<td width="350" align="left">&nbsp;&nbsp;<input type="text" id="tel" name="tel" value=""
-									required></td>
+									required>&nbsp;&nbsp;'-'제외</td>
 						</tr>
+
 						<tr align="center">
 							<th height="60" width="200">주소</th>
-							<td width="350" align="left">&nbsp;&nbsp;<input type="text" id="addr" name="addr"
-									value="'구'까지만 입력하세요." required></td>
+							<td width="350" align="left">&nbsp;&nbsp;<input type="text" id="addr" name="addr" value=""
+									required>&nbsp;&nbsp;'구'까지만 입력</td>
 						</tr>
 					</table>
+
 					<br />
 					<button type="submit" class="btn btn-warning" onclick="btn()">가입</button>
 					&nbsp;&nbsp;&nbsp;
@@ -116,14 +131,24 @@
 </body>
 
 <script>
+	//type에 따른 폼 구조 
 	$("#type").change(function () {
 		var selectVal = $(this).val;
 		if (selectVal = 'client') {
 			$("#sort").show();
-			$("#abc").show();
+			$("#cname").attr("required", true);
+			$("#name").attr("required", false);
+			$("#age").attr("required", false);
+			$("#cname").show();
+
+			$("#uname").hide();
+			$("#uage").hide();
+		}else{
+			$("#sort").hide();
 		}
 	})
 
+	//아이디 중복체크
 	function id_check() {
 		var id = document.getElementById('id').value;
 		$.ajax({
@@ -153,21 +178,6 @@
 	}
 
 	function btn() {
-		//패스워드 암호화
-		var plainText = document.getElementById('pw').value;
-		var key = "godls103";
-		var encrypted = CryptoJS.SEED.encrypt(plainText, key, {
-			iv: key,
-			mode: CryptoJS.mode.CBC,
-			padding: CryptoJS.pad.Pkcs7
-		}).toString();
-		var decrypted = CryptoJS.SEED.decrypt(encrypted, key, {
-			iv: key,
-			padding: CryptoJS.pad.Pkcs7
-		}).toString(CryptoJS.enc.Utf8);
-		document.getElementById('epw').value = encrypted;
-		document.getElementById('depw').value = decrypted;
-
 		//required
 		var pw = document.getElementById('pw').value;
 		var pw2 = document.getElementById('pw2').value;

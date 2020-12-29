@@ -38,7 +38,7 @@
                 </div>
                 <br />
                 <div>
-                    <h5>${msg }</h5>
+                    <h5 style='color:#e6b301;'>${msg }</h5>
                 </div>
                 <br/>
                 <div>

@@ -1,38 +1,42 @@
 package Edu.co.edu.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class EduOneServ
- */
-@WebServlet("/EduOne.do")
-public class EduOneServ extends HttpServlet {
+import Edu.co.edu.dao.EduDao;
+import Edu.co.edu.vo.EduVo;
+
+@WebServlet("/EduRead.do")
+public class EduReadServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EduOneServ() {
+ 
+    public EduReadServ() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		EduDao dao = new EduDao(); 
+		EduVo vo = new EduVo(); 
+
+		vo.setE_no(request.getParameter("e_no")); 
+		vo = dao.selectOne(vo); 
+
+		request.setAttribute("vo", vo);
+		String viewPage = "/Edu/jsp/eduList/eduRead.jsp"; 
+
+		RequestDispatcher dp = request.getRequestDispatcher(viewPage); 
+		dp.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
