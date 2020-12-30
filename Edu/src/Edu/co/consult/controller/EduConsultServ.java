@@ -37,10 +37,11 @@ public class EduConsultServ extends HttpServlet {
 
 		ConDao dao = new ConDao();
 		try {
+		//REQ	
 			EduVo vo = new EduVo();
 			// 학원이름을 가져와서 쿼리하고 학원정보 저장
 			vo.setName(cname); // 학원이름 저장
-			vo = dao.selectCon(vo);
+			vo = dao.selectCon(cname, vo);
 			System.out.println(cname); //학원이름
 			
 			dao = new ConDao();
@@ -48,6 +49,7 @@ public class EduConsultServ extends HttpServlet {
 			int n = dao.uInsert(name, vo);
 			System.out.println(n + " 건 상담입력 되었습니다.");
 			
+		//CON
 			dao = new ConDao();
 			UserVo uo = new UserVo();
 			// 학생 이름을 가져와서 쿼리하고 학생정보 저장

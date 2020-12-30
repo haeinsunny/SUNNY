@@ -43,11 +43,11 @@
                     <table border="1">
                         <tr align="center">
                             <th width="100" height="40">번호</th>
-                            <td width="100">${vo.e_no }</td>
+                            <td width="130">${vo.e_no }</td>
                             <th width="100">등록일자</th>
-                            <td width="100">${vo.e_date }</td>
+                            <td width="130">${vo.e_date }</td>
                             <th width="100">유형</th>
-                            <td width="100">${vo.sort }</td>
+                            <td width="130">${vo.sort }</td>
                         </tr>
                         <tr align="center">
                             <th width="100" height="40">학원명</th>

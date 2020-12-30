@@ -81,8 +81,7 @@
 
 								<select name="sort" id="sort" style="width:100px; height:30px; display: none;">
 									<option value="입시">입시</option>
-									<option value="단과">단과</option>
-									<option value="과외">과외</option>
+									<option value="단과">단과</option>									
 								</select>
 							</td>
 						</tr>

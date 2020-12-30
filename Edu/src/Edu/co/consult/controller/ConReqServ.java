@@ -33,8 +33,10 @@ public class ConReqServ extends HttpServlet {
 		ReqVo vo = new ReqVo();
 
 		String name = request.getParameter("name");
+		String type = request.getParameter("type");
 
 		System.out.println(name);
+		System.out.println(type);
 
 		// 전체 조회 페이징 처리
 
@@ -47,7 +49,7 @@ public class ConReqServ extends HttpServlet {
 		
 
 
-		if (request.getParameter("type") == "user") {
+		if (request.getParameter("type").equals("user")) {
 			paging.setTotalCount(dao.getRCount(name)); // 리스트의 총 데이터갯수 (기준으로 페이지나눔)
 			int startRow = paging.getPageNo() * 10 - 9; // 리스트 조회 (한페이지당 10개씩)
 			int endRow = paging.getPageNo() * 10;
@@ -66,7 +68,7 @@ public class ConReqServ extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
 			
-		} else {
+		} else if (request.getParameter("type").equals("client")){
 			
 			paging.setTotalCount(dao.getcCount(name)); // 리스트의 총 데이터갯수 (기준으로 페이지나눔)
 			int startRow = paging.getPageNo() * 10 - 9; // 리스트 조회 (한페이지당 10개씩)
@@ -81,6 +83,7 @@ public class ConReqServ extends HttpServlet {
 			paging.setPageNo(currentPage);
 			paging.setPrevPageNo(prevPage);
 			paging.setNextPageNo(nextPage);
+			System.out.println(paging);
 			request.setAttribute("params", paging);
 			String viewPage = "jsp/consult/conList.jsp";
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

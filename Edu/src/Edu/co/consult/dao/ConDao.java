@@ -19,7 +19,8 @@ public class ConDao extends DAO {
 	private ResultSet rs;
 
 	// 상담입력 sql
-	private final String UINSERT = "INSERT INTO REQ VALUES(R_SEQ.NEXTVAL, ?, ?, ?, ?,'NO', SYSDATE, ?)";
+	private final String UINSERT = "INSERT INTO REQ(r_no, name, tel, addr, sort, r_date, cname)"	
+									+" VALUES(R_SEQ.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
 
 	private final String CINSERT = "INSERT INTO CON VALUES(C_SEQ.NEXTVAL, ?, ?, ?, ?,'NO', SYSDATE, ?)";
 
@@ -31,24 +32,24 @@ public class ConDao extends DAO {
 	private final String COUNT = "SELECT COUNT(*) FROM EDU";
 
 	// 한건 조회 sql
-	private final String SELECT_CON = "SELECT * FROM EDU WHERE CNAME=?";
-	private final String SELECT_ONE = "SELECT * FROM USER_EDU WHERE NAME=?";
+	private final String SELECT_CON = "SELECT * FROM EDU WHERE NAME=?";
+	private final String SELECT_ONE = "SELECT * FROM USER_EDU WHERE NAME=? ";
 
 	// 상담입력 총 레코드 수 sql
 	private final String RCOUNT = "SELECT COUNT(*) FROM REQ WHERE NAME= ? ";
-	private final String cCOUNT = "SELECT COUNT(*) FROM CON WHERE NAME= ? ";
+	private final String cCOUNT = "SELECT COUNT(*) FROM CON WHERE CNAME= ? ";
 
 	// 상담 전체조회 sql
 	private final String SELECT_REQ = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
-			+ " (SELECT * FROM REQ WHERE NAME= ? ORDER BY R_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+			+ " (SELECT * FROM REQ WHERE NAME= ?) A ) B WHERE RN BETWEEN ? AND ? ORDER BY R_NO DESC";
 	private final String SELECT_C = "SELECT * FROM (SELECT A.*, ROWNUM RN FROM"
-			+ " (SELECT * FROM CON WHERE NAME= ? ORDER BY C_NO DESC) A ) B WHERE RN BETWEEN ? AND ? ";
+			+ " (SELECT * FROM CON WHERE CNAME= ?) A ) B WHERE RN BETWEEN ? AND ? ORDER BY C_NO DESC";
 
 	// 학원조회
-	public EduVo selectCon(EduVo vo) {
+	public EduVo selectCon(String cname, EduVo vo) {
 		try {
 			psmt = conn.prepareStatement(SELECT_CON);
-			psmt.setString(1, vo.getName());
+			psmt.setString(1, cname);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 				vo = new EduVo();
@@ -70,11 +71,11 @@ public class ConDao extends DAO {
 		int n = 0; // 입력건 선언 validation한다
 		try {
 			psmt = conn.prepareStatement(UINSERT);
-			psmt.setString(1, name);
+			psmt.setString(1, name);  //학생이름
 			psmt.setString(2, vo.getTel());
 			psmt.setString(3, vo.getAddr());
 			psmt.setString(4, vo.getSort());
-			psmt.setString(5, vo.getName());
+			psmt.setString(5, vo.getName());  //학원이름
 
 			n = psmt.executeUpdate();
 		} catch (SQLException e) { // SQLException하는 catch
@@ -180,7 +181,7 @@ public class ConDao extends DAO {
 		return vo;
 	}
 
-	// 상담전체조회 : 페이징 처리를 위한 sql / 인라인뷰, rownum 사용
+	// USER 상담전체조회 : 페이징 처리를 위한 sql / 인라인뷰, rownum 사용
 	public ArrayList<ReqVo> selectPage(String name, int startRow, int endRow) {
 		ArrayList<ReqVo> list = new ArrayList<ReqVo>();
 		ReqVo vo;
@@ -195,10 +196,10 @@ public class ConDao extends DAO {
 				vo = new ReqVo(); // 초기화하고
 				vo.setR_no(rs.getString("r_NO")); // 값들을 가져와서
 				vo.setCname(rs.getString("cname"));
+				vo.setTel(rs.getString("tel"));
 				vo.setAddr(rs.getString("addr"));
 				vo.setSort(rs.getString("sort"));
 				vo.setR_date(rs.getDate("r_date"));
-				vo.setResult(rs.getString("result"));
 
 				list.add(vo); // 리스트에 담아라
 			}
@@ -242,11 +243,11 @@ public class ConDao extends DAO {
 				while (rs.next()) {
 					vo = new ConVo(); // 초기화하고
 					vo.setC_no(rs.getString("C_NO")); // 값들을 가져와서
-					vo.setName(rs.getString("cname"));
+					vo.setName(rs.getString("name"));
 					vo.setAddr(rs.getString("addr"));
 					vo.setAge(rs.getString("age"));
+					vo.setTel(rs.getNString("tel"));
 					vo.setC_date(rs.getDate("C_date"));
-					vo.setResult(rs.getString("result"));
 
 					list.add(vo); // 리스트에 담아라
 				}
@@ -262,7 +263,7 @@ public class ConDao extends DAO {
 	public int getcCount(String name) {
 		int c = 0;
 		try {
-			psmt = conn.prepareStatement(RCOUNT);
+			psmt = conn.prepareStatement(cCOUNT);
 			psmt.setString(1, name);
 			rs = psmt.executeQuery();
 			if (rs.next()) {

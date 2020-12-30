@@ -49,7 +49,10 @@
       <div class="col-sm-8">
       <br />
       <br />
-        <br />
+      <br />
+      <div>
+      <h4>상담 신청 내역</h4>
+      </div>
         <br />
         <table class="table table-hover" align="center">
           <tr align="center">
@@ -59,17 +62,15 @@
             <th width="100">주소</th>
             <th width="100">전화번호</th>
             <th width="80">신청일자</th>
-            <th width="50">결과</th>
           </tr>
           <c:forEach var="vo" items="${clist }">
             <tr class="record" align="center" onclick="location.href='/Edu/EduRead.do?no=${vo.c_no}'">
               <td width="100" align="center">${vo.c_no }</td>
               <td width="100" align="center">${vo.name }</td>
-              <td width="250">${vo.tel }</td>
+              <td width="250">${vo.age } 세</td>
               <td width="100" align="center">${vo.addr }</td>
-              <td width="100" align="center">${vo.age }</td>
+              <td width="100" align="center">${vo.tel }</td>
               <td width="100" align="center">${vo.c_date }</td>
-              <td width="100" align="center">${vo.result }</td>
             </tr>
           </c:forEach>
         </table>

@@ -30,14 +30,18 @@ public class SearchListServ extends HttpServlet {
 
 		// 페이징 처리
 		try {
+			// jsp페이지로부터 값 받아오기
 			String word = request.getParameter("word");
+			String sort = request.getParameter("sort");
 			String pageNum = request.getParameter("pageNum"); // jsp페이지로부터 값 받아오기
 			dao = new EduDao(); // 위에서 dao.selectAll()하고 디비 닫아버림 다시 conn해야해서
 			PageVo paging = new PageVo();
 			pageNum = pageNum == null ? "1" : pageNum; // page가 null이면 1이라고 해주고 아니면 pageNum을 넣는다
 			paging.setPageNo(Integer.parseInt(pageNum));
 			paging.setPageSize(10);
-			paging.setTotalCount(dao.getSCount(word)); // 리스트의 총 데이터갯수 (기준으로 페이지나눔)
+			
+			// 리스트의 총 데이터갯수 (기준으로 페이지나눔)
+			paging.setTotalCount(dao.getSCount(word)); 
 
 			int startRow = paging.getPageNo() * 10 - 9; // 리스트 조회 (한페이지당 10개씩)
 			int endRow = paging.getPageNo() * 10;

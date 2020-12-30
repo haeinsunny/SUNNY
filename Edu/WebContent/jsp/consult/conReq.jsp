@@ -59,7 +59,6 @@
             <th width="100">주소</th>
             <th width="50">분류</th>
             <th width="80">신청일자</th>
-            <th width="50">결과</th>
           </tr>
           <c:forEach var="vo" items="${rlist }">
             <tr class="record" align="center" onclick="location.href='/Edu/EduRead.do?no=${vo.r_no}'">
